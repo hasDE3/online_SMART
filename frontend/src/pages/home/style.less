@@ -1,0 +1,60 @@
+@import '~antd/es/style/themes/default.less';
+
+.textOverflow() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+.projectList {
+  :global {
+    .ant-card-meta-description {
+      height: 40px;
+      overflow: hidden;
+      color: @text-color-secondary;
+      line-height: 20px;
+    }
+  }
+  .cardTitle {
+    font-size: 0;
+    a {
+      display: inline-block;
+      height: 18px;
+      margin-left: 0px;
+      color: @heading-color;
+      font-size: 12px;
+      line-height: 18px;
+      vertical-align: top;
+      &:hover {
+        color: @primary-color;
+      }
+    }
+  }
+  .projectGrid {
+    width: 50%;
+  }
+  .projectItemContent {
+    display: flex;
+    height: 20px;
+    margin-top: 8px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    .textOverflow();
+    a {
+      display: inline-block;
+      flex: 1 1 0;
+      color: @text-color-secondary;
+      .textOverflow();
+      &:hover {
+        color: @primary-color;
+      }
+    }
+    .datetime {
+      flex: 0 0 auto;
+      float: right;
+      color: @disabled-color;
+    }
+  }
+}

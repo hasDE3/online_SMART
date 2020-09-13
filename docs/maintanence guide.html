@@ -1,0 +1,1392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-08-22 Sat 20:31 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Maintainence Guide</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="zheyu" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="/Users/zheyu/Sync/Workflow/Css/1/styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Maintainence Guide</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd2f2924">1. Dependencies</a></li>
+<li><a href="#orgd9be24e">2. Develop &amp; Build</a></li>
+<li><a href="#org3729bd7">3. Deployment</a>
+<ul>
+<li><a href="#orgd3c1aea">3.1. Environment Preparation</a></li>
+<li><a href="#orgbf8eec2">3.2. Nginx Configuration</a></li>
+<li><a href="#org730a189">3.3. Back-end Application</a></li>
+</ul>
+</li>
+<li><a href="#org1b0bf99">4. APIs &amp; Source Code Structure</a>
+<ul>
+<li><a href="#orgd09410c">4.1. APIs</a></li>
+<li><a href="#org8de0890">4.2. Source Code Structure</a></li>
+</ul>
+</li>
+<li><a href="#org06af382">5. Database</a>
+<ul>
+<li><a href="#org8aacc3b">5.1. Care Setting</a></li>
+<li><a href="#org911d40a">5.2. System Function</a></li>
+<li><a href="#org746b815">5.3. Hazard Instance</a></li>
+<li><a href="#orge3b2d27">5.4. Care Process System</a></li>
+<li><a href="#org7b9e3b0">5.5. Process Node</a></li>
+<li><a href="#org3a32020">5.6. Process Edge</a></li>
+<li><a href="#org6ea23da">5.7. Process Group</a></li>
+<li><a href="#orgb5c82cb">5.8. Cause and Effect</a></li>
+<li><a href="#orga24028d">5.9. Issue Log</a></li>
+<li><a href="#orgceb2e6e">5.10. Report</a></li>
+</ul>
+</li>
+<li><a href="#org5dd5080">6. * Resources</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd2f2924" class="outline-2">
+<h2 id="orgd2f2924"><span class="section-number-2">1</span> Dependencies</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>The program is tested on Python 3.74, Django 3.09, Django Rest Framework 3.9, Ant Design Pro 4.0 (GGEditor 2.04)</li>
+<li>According to Django Rest Framework's official documentations, the following requirements are optional
+<ul class="org-ul">
+<li>PyYAML, uritemplate (5.1+, 3.0.0+) - Schema generation support.</li>
+<li>Markdown (3.0.0+) - Markdown support for the browsable API.</li>
+<li>Pygments (2.4.0+) - Add syntax highlighting to Markdown processing.</li>
+<li>django-filter (1.0.1+) - Filtering support.</li>
+<li>django-guardian (1.1.1+) - Object level permissions support.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd9be24e" class="outline-2">
+<h2 id="orgd9be24e"><span class="section-number-2">2</span> Develop &amp; Build</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>Use 'npm start' to run front-end application in developing environment</li>
+<li>Use 'umi build' to build front-end pages, all the build files will be stored in the '/dist' folder</li>
+<li>Front-end program is set to run on port 8000, you can change the port in '/config/proxy.ts'</li>
+<li>run backend service on port 9000</li>
+</ul>
+<pre class="example">
+python3 manage.py runserver 9000
+</pre>
+</div>
+</div>
+<div id="outline-container-org3729bd7" class="outline-2">
+<h2 id="org3729bd7"><span class="section-number-2">3</span> Deployment</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgd3c1aea" class="outline-3">
+<h3 id="orgd3c1aea"><span class="section-number-3">3.1</span> Environment Preparation</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>Install required Python3 packages manually (tested on Debian 10)</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-bash">apt-get install python3-pip
+pip3 install django
+pip3 install djangorestframework
+pip3 install markdown
+pip3 install django-filter
+pip3 install pymysql
+pip3 install djangorestframework-jwt
+</pre>
+</div>
+<ul class="org-ul">
+<li>Install required Python3 packages automatically
+<ul class="org-ul">
+<li>you can also install the required packages using 'requirements.txt' (not tested)</li>
+</ul></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-bash">pip install -r requirements.txt
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbf8eec2" class="outline-3">
+<h3 id="orgbf8eec2"><span class="section-number-3">3.2</span> Nginx Configuration</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>Put all the front-end build files in Nginx' target folder, then modify the Nginx configuration manually</li>
+<li>This is an example of Nginx configuration
+<ul class="org-ul">
+<li>The program does not force SSL connection, but it is recommended to add SSL support</li>
+</ul></li>
+<li>The back-end service is running on port 9000, you can change the number to any ports you want, but remember to change the backend service too</li>
+</ul>
+<pre class="example">
+server {
+        lisnten 80;
+        server_name yourdomainname.com;
+
+        root /path/to/your/folder/;
+        index index.html;
+
+        location / {
+                try_files $uri $uri/ /index.html;
+        }
+
+        location /api {
+                proxy_pass http://localhost:9000;
+                proxy_redirect default;
+        }
+}
+</pre>
+</div>
+</div>
+<div id="outline-container-org730a189" class="outline-3">
+<h3 id="org730a189"><span class="section-number-3">3.3</span> Back-end Application</h3>
+<div class="outline-text-3" id="text-3-3">
+<ul class="org-ul">
+<li>As Python does not enforce developers to compile its source code before running, the back-end application can be run directly through Django's 'run server' command</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1b0bf99" class="outline-2">
+<h2 id="org1b0bf99"><span class="section-number-2">4</span> APIs &amp; Source Code Structure</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgd09410c" class="outline-3">
+<h3 id="orgd09410c"><span class="section-number-3">4.1</span> APIs</h3>
+<div class="outline-text-3" id="text-4-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Related Data</th>
+<th scope="col" class="org-left">Name</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Care Setting</td>
+<td class="org-left">listcs</td>
+<td class="org-left">list all care settings</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addcs</td>
+<td class="org-left">add new care setting</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updatecs</td>
+<td class="org-left">update care setting</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removecs</td>
+<td class="org-left">remove care setting</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">System Function</td>
+<td class="org-left">listsf</td>
+<td class="org-left">list all system functions</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addsf</td>
+<td class="org-left">add new system function</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updatesf</td>
+<td class="org-left">update system function</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removesf</td>
+<td class="org-left">remove system function</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Hazard Instance</td>
+<td class="org-left">listhi</td>
+<td class="org-left">list all hazard instances</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addhi</td>
+<td class="org-left">add new hazard instance</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updatehi</td>
+<td class="org-left">update hazard instance</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removehi</td>
+<td class="org-left">remove hazard instance</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Issue Log</td>
+<td class="org-left">listil</td>
+<td class="org-left">list all issue logs</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addil</td>
+<td class="org-left">add new issue log</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updateil</td>
+<td class="org-left">update issue log</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removeil</td>
+<td class="org-left">remove issue log</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Process System</td>
+<td class="org-left">listps</td>
+<td class="org-left">list all process systems</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addps</td>
+<td class="org-left">add new process system</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updateps</td>
+<td class="org-left">update process system</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removeps</td>
+<td class="org-left">remove process system</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Process Node</td>
+<td class="org-left">listpn</td>
+<td class="org-left">list all process nodes</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addpn</td>
+<td class="org-left">add new process node</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updatepn</td>
+<td class="org-left">update process node</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removepn</td>
+<td class="org-left">remove process node</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Process Edge</td>
+<td class="org-left">listpe</td>
+<td class="org-left">list all process edges</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addpe</td>
+<td class="org-left">add new process edge</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updatepe</td>
+<td class="org-left">update process edge</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removepe</td>
+<td class="org-left">remove process edge</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Risk Matrix</td>
+<td class="org-left">listrm</td>
+<td class="org-left">list all risk matrixs</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addrm</td>
+<td class="org-left">add new risk matrix</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updaterm</td>
+<td class="org-left">update risk matrix</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removerm</td>
+<td class="org-left">remove risk matrix</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Report</td>
+<td class="org-left">listre</td>
+<td class="org-left">list all reports</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addre</td>
+<td class="org-left">add new report</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updatere</td>
+<td class="org-left">update report</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removere</td>
+<td class="org-left">remove report</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Hazard Type</td>
+<td class="org-left">listht</td>
+<td class="org-left">list all hazard types</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addht</td>
+<td class="org-left">add new hazard type</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updateht</td>
+<td class="org-left">update hazard type</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removeht</td>
+<td class="org-left">remove hazard type</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">System (System Function)</td>
+<td class="org-left">listsy</td>
+<td class="org-left">list all systems</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addsy</td>
+<td class="org-left">add new system</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updatesy</td>
+<td class="org-left">update system</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removesy</td>
+<td class="org-left">remove system</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Process Node Group</td>
+<td class="org-left">listng</td>
+<td class="org-left">list all node groups</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addng</td>
+<td class="org-left">add new node group</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updateng</td>
+<td class="org-left">update node group</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removeng</td>
+<td class="org-left">remove node group</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Process Node's associated System Function</td>
+<td class="org-left">listpnsf</td>
+<td class="org-left">list all process node's system function association records</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addpnsf</td>
+<td class="org-left">add new process node's system function association record</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updatepnsf</td>
+<td class="org-left">update process node's system function association record</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removepnsf</td>
+<td class="org-left">remove process node's system function association record</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Process Node's associated Hazard Instance</td>
+<td class="org-left">listpnhi</td>
+<td class="org-left">list all process node's hazard instance association records</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">addpnhi</td>
+<td class="org-left">add new process node's hazard instance association record</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">updatepnhi</td>
+<td class="org-left">update process node's hazard instance association record</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">removepnhi</td>
+<td class="org-left">remove process node's hazard instance association record</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-org8de0890" class="outline-3">
+<h3 id="org8de0890"><span class="section-number-3">4.2</span> Source Code Structure</h3>
+<div class="outline-text-3" id="text-4-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Folder</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">/frontend</td>
+<td class="org-left">all the front-end related files</td>
+</tr>
+
+<tr>
+<td class="org-left">/frontend/src/pages</td>
+<td class="org-left">front-end main source code files</td>
+</tr>
+
+<tr>
+<td class="org-left">/frontend/src/assets</td>
+<td class="org-left">some front-end resource files</td>
+</tr>
+
+<tr>
+<td class="org-left">/frontend/dist</td>
+<td class="org-left">front-end build files</td>
+</tr>
+
+<tr>
+<td class="org-left">/frontend/configuration</td>
+<td class="org-left">front-end configuration files</td>
+</tr>
+
+<tr>
+<td class="org-left">/backend</td>
+<td class="org-left">all the back-end related files</td>
+</tr>
+
+<tr>
+<td class="org-left">/backend/venv</td>
+<td class="org-left">back-end Python3 virtual environment</td>
+</tr>
+
+<tr>
+<td class="org-left">/backend/src</td>
+<td class="org-left">back-end source code files</td>
+</tr>
+
+<tr>
+<td class="org-left">/backend/src/smart_main</td>
+<td class="org-left">back-end main source code files</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org06af382" class="outline-2">
+<h2 id="org06af382"><span class="section-number-2">5</span> Database</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org8aacc3b" class="outline-3">
+<h3 id="org8aacc3b"><span class="section-number-3">5.1</span> Care Setting</h3>
+<div class="outline-text-3" id="text-5-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Database Item</th>
+<th scope="col" class="org-left">Related Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">cs_name</td>
+<td class="org-left">Care Setting Name</td>
+</tr>
+
+<tr>
+<td class="org-left">cs_desc</td>
+<td class="org-left">Care Setting Description</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org911d40a" class="outline-3">
+<h3 id="org911d40a"><span class="section-number-3">5.2</span> System Function</h3>
+<div class="outline-text-3" id="text-5-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Database Item</th>
+<th scope="col" class="org-left">Related Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">sf_name</td>
+<td class="org-left">System Function Name</td>
+</tr>
+
+<tr>
+<td class="org-left">sf_desc</td>
+<td class="org-left">System Function Description</td>
+</tr>
+
+<tr>
+<td class="org-left">sf_parent</td>
+<td class="org-left">Associated System</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org746b815" class="outline-3">
+<h3 id="org746b815"><span class="section-number-3">5.3</span> Hazard Instance</h3>
+<div class="outline-text-3" id="text-5-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Database Item</th>
+<th scope="col" class="org-left">Related Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">hi_name</td>
+<td class="org-left">Hazard Instance Name</td>
+</tr>
+
+<tr>
+<td class="org-left">hi_desc</td>
+<td class="org-left">Hazard Instance Description</td>
+</tr>
+
+<tr>
+<td class="org-left">hi_inse</td>
+<td class="org-left">Initial Severity</td>
+</tr>
+
+<tr>
+<td class="org-left">hi_inli</td>
+<td class="org-left">Initial Likelihood</td>
+</tr>
+
+<tr>
+<td class="org-left">hi_rese</td>
+<td class="org-left">Residual Severity</td>
+</tr>
+
+<tr>
+<td class="org-left">hi_reli</td>
+<td class="org-left">Residual Likelihood</td>
+</tr>
+
+<tr>
+<td class="org-left">hi_inrr</td>
+<td class="org-left">Initial Risk Rating</td>
+</tr>
+
+<tr>
+<td class="org-left">hi_rerr</td>
+<td class="org-left">Residual Risk Rating</td>
+</tr>
+
+<tr>
+<td class="org-left">hi_clju</td>
+<td class="org-left">Clinical Justification</td>
+</tr>
+
+<tr>
+<td class="org-left">hi_parent</td>
+<td class="org-left">Associated Hazard Type</td>
+</tr>
+
+<tr>
+<td class="org-left">hi_ps</td>
+<td class="org-left">Associated Process Step (Abandoned)</td>
+</tr>
+
+<tr>
+<td class="org-left">hi_sf</td>
+<td class="org-left">Associated System Function</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orge3b2d27" class="outline-3">
+<h3 id="orge3b2d27"><span class="section-number-3">5.4</span> Care Process System</h3>
+<div class="outline-text-3" id="text-5-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Database Item</th>
+<th scope="col" class="org-left">Related Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">ps_name</td>
+<td class="org-left">Process System Name</td>
+</tr>
+
+<tr>
+<td class="org-left">ps_desc</td>
+<td class="org-left">Process System Description</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org7b9e3b0" class="outline-3">
+<h3 id="org7b9e3b0"><span class="section-number-3">5.5</span> Process Node</h3>
+<div class="outline-text-3" id="text-5-5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Database Item</th>
+<th scope="col" class="org-left">Related Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">label</td>
+<td class="org-left">Node Label</td>
+</tr>
+
+<tr>
+<td class="org-left">pn_desc</td>
+<td class="org-left">Node Description</td>
+</tr>
+
+<tr>
+<td class="org-left">x</td>
+<td class="org-left">Coordinate x</td>
+</tr>
+
+<tr>
+<td class="org-left">y</td>
+<td class="org-left">Coordinate y</td>
+</tr>
+
+<tr>
+<td class="org-left">color</td>
+<td class="org-left">Node color (Used to draw different types of nodes)</td>
+</tr>
+
+<tr>
+<td class="org-left">size</td>
+<td class="org-left">Node size (Used to draw different tyeps of nodes)</td>
+</tr>
+
+<tr>
+<td class="org-left">shape</td>
+<td class="org-left">Node shape (Used to draw different types fo nodes)</td>
+</tr>
+
+<tr>
+<td class="org-left">pn_cs</td>
+<td class="org-left">Associaed Care Setting</td>
+</tr>
+
+<tr>
+<td class="org-left">pn_ps</td>
+<td class="org-left">Associated Process System</td>
+</tr>
+
+<tr>
+<td class="org-left">parent</td>
+<td class="org-left">Associated Group</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org3a32020" class="outline-3">
+<h3 id="org3a32020"><span class="section-number-3">5.6</span> Process Edge</h3>
+<div class="outline-text-3" id="text-5-6">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Database Item</th>
+<th scope="col" class="org-left">Related Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">label</td>
+<td class="org-left">Edge Label</td>
+</tr>
+
+<tr>
+<td class="org-left">source</td>
+<td class="org-left">Start Point (Stores a process node id)</td>
+</tr>
+
+<tr>
+<td class="org-left">target</td>
+<td class="org-left">End Point (Stores a process node id)</td>
+</tr>
+
+<tr>
+<td class="org-left">pe_desc</td>
+<td class="org-left">Edge Description</td>
+</tr>
+
+<tr>
+<td class="org-left">pe_ps</td>
+<td class="org-left">Associated Process System</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org6ea23da" class="outline-3">
+<h3 id="org6ea23da"><span class="section-number-3">5.7</span> Process Group</h3>
+<div class="outline-text-3" id="text-5-7">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Database Item</th>
+<th scope="col" class="org-left">Related Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">label</td>
+<td class="org-left">Group Label</td>
+</tr>
+
+<tr>
+<td class="org-left">x</td>
+<td class="org-left">Coordinate y</td>
+</tr>
+
+<tr>
+<td class="org-left">y</td>
+<td class="org-left">Coordinate x</td>
+</tr>
+
+<tr>
+<td class="org-left">ng_ps</td>
+<td class="org-left">Associated Process System</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgb5c82cb" class="outline-3">
+<h3 id="orgb5c82cb"><span class="section-number-3">5.8</span> Cause and Effect</h3>
+<div class="outline-text-3" id="text-5-8">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Database Item</th>
+<th scope="col" class="org-left">Related Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">ca_name</td>
+<td class="org-left">Cause Name</td>
+</tr>
+
+<tr>
+<td class="org-left">ca_desc</td>
+<td class="org-left">Cause Description</td>
+</tr>
+
+<tr>
+<td class="org-left">ca_hi</td>
+<td class="org-left">Associated Hazard Instance (Cause)</td>
+</tr>
+
+<tr>
+<td class="org-left">ef_name</td>
+<td class="org-left">Effect Name</td>
+</tr>
+
+<tr>
+<td class="org-left">ef_desc</td>
+<td class="org-left">Effect Description</td>
+</tr>
+
+<tr>
+<td class="org-left">ef_hi</td>
+<td class="org-left">Associated Hazard Instance (Effect)</td>
+</tr>
+
+<tr>
+<td class="org-left">caco_name</td>
+<td class="org-left">Cause Control Name</td>
+</tr>
+
+<tr>
+<td class="org-left">caco_desc</td>
+<td class="org-left">Cause Control Description</td>
+</tr>
+
+<tr>
+<td class="org-left">caco_state</td>
+<td class="org-left">Cause Control State</td>
+</tr>
+
+<tr>
+<td class="org-left">caco_type</td>
+<td class="org-left">Cause Control Type</td>
+</tr>
+
+<tr>
+<td class="org-left">caco_ca</td>
+<td class="org-left">Associated Cause (Cause Control)</td>
+</tr>
+
+<tr>
+<td class="org-left">efco_name</td>
+<td class="org-left">Effect Control Name</td>
+</tr>
+
+<tr>
+<td class="org-left">efco_desc</td>
+<td class="org-left">Effect Control Description</td>
+</tr>
+
+<tr>
+<td class="org-left">efco_state</td>
+<td class="org-left">Effect Control State</td>
+</tr>
+
+<tr>
+<td class="org-left">efco_type</td>
+<td class="org-left">Effect Control Type</td>
+</tr>
+
+<tr>
+<td class="org-left">efco_ef</td>
+<td class="org-left">Associated Effect (Effect Control)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orga24028d" class="outline-3">
+<h3 id="orga24028d"><span class="section-number-3">5.9</span> Issue Log</h3>
+<div class="outline-text-3" id="text-5-9">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Database Item</th>
+<th scope="col" class="org-left">Related Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">il_name</td>
+<td class="org-left">Issue Name</td>
+</tr>
+
+<tr>
+<td class="org-left">il_desc</td>
+<td class="org-left">Issue Description</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgceb2e6e" class="outline-3">
+<h3 id="orgceb2e6e"><span class="section-number-3">5.10</span> Report</h3>
+<div class="outline-text-3" id="text-5-10">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Database Item</th>
+<th scope="col" class="org-left">Related Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">re_name</td>
+<td class="org-left">Report Name</td>
+</tr>
+
+<tr>
+<td class="org-left">re_desc</td>
+<td class="org-left">Report Description</td>
+</tr>
+
+<tr>
+<td class="org-left">re_crm</td>
+<td class="org-left">Clinical Risk Management System</td>
+</tr>
+
+<tr>
+<td class="org-left">re_ss</td>
+<td class="org-left">Summary Safety Statement</td>
+</tr>
+
+<tr>
+<td class="org-left">re_qa</td>
+<td class="org-left">Quality Assurance and Document Approval</td>
+</tr>
+
+<tr>
+<td class="org-left">re_cm</td>
+<td class="org-left">Configuration Management</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5dd5080" class="outline-2">
+<h2 id="org5dd5080"><span class="section-number-2">6</span> * Resources</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li><a href="https://umijs.org">https://umijs.org</a> (UmiJS documentation)</li>
+<li><a href="https://github.com/alibaba/GGEditor/blob/master/README.en-US.md">https://github.com/alibaba/GGEditor/blob/master/README.en-US.md</a> (GGEditor documentation)</li>
+<li><a href="https://pro.ant.design/docs/getting-started">https://pro.ant.design/docs/getting-started</a> (Ant Design Pro)</li>
+<li><a href="https://stackoverflow.com/questions/14484787/wrap-text-in-javascript">https://stackoverflow.com/questions/14484787/wrap-text-in-javascript</a>
+<ul class="org-ul">
+<li>wrap text into multiple lines</li>
+<li>used in the 'Care Process Editor'</li>
+<li>text in each node is wrapped through this method</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: zheyu</p>
+<p class="date">Created: 2020-08-22 Sat 20:31</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

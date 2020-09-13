@@ -1,0 +1,270 @@
+#+TITLE: Maintainence Guide
+#+AUTHOR: zheyu
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="/Users/zheyu/Sync/Workflow/Css/1/styles/readtheorg/css/readtheorg.css"/>
+#+OPTIONS: ^:nil
+
+* Dependencies
+- The program is tested on Python 3.74, Django 3.09, Django Rest Framework 3.9, Ant Design Pro 4.0 (GGEditor 2.04)
+- According to Django Rest Framework's official documentations, the following requirements are optional
+  - PyYAML, uritemplate (5.1+, 3.0.0+) - Schema generation support.
+  - Markdown (3.0.0+) - Markdown support for the browsable API.
+  - Pygments (2.4.0+) - Add syntax highlighting to Markdown processing.
+  - django-filter (1.0.1+) - Filtering support.
+  - django-guardian (1.1.1+) - Object level permissions support.
+  
+* Develop & Build
+- Use 'npm start' to run front-end application in developing environment
+- Use 'umi build' to build front-end pages, all the build files will be stored in the '/dist' folder
+- Front-end program is set to run on port 8000, you can change the port in '/config/proxy.ts'
+- run backend service on port 9000
+
+#+begin_src
+python3 manage.py runserver 9000
+#+end_src
+
+* Deployment
+** Environment Preparation
+- Install required Python3 packages manually (tested on Debian 10)
+
+#+begin_src bash
+  apt-get install python3-pip
+  pip3 install django
+  pip3 install djangorestframework
+  pip3 install markdown
+  pip3 install django-filter
+  pip3 install pymysql
+  pip3 install djangorestframework-jwt
+#+end_src
+
+- Install required Python3 packages automatically
+  - you can also install the required packages using 'requirements.txt' (not tested)
+
+#+begin_src bash
+  pip install -r requirements.txt
+#+end_src
+
+** Nginx Configuration
+- Put all the front-end build files in Nginx' target folder, then modify the Nginx configuration manually
+- This is an example of Nginx configuration
+  - The program does not force SSL connection, but it is recommended to add SSL support
+- The back-end service is running on port 9000, you can change the number to any ports you want, but remember to change the backend service too
+
+#+begin_src
+server {
+        lisnten 80;
+        server_name yourdomainname.com;
+
+        root /path/to/your/folder/;
+        index index.html;
+
+        location / {
+                try_files $uri $uri/ /index.html;
+        }
+
+        location /api {
+                proxy_pass http://localhost:9000;
+                proxy_redirect default;
+        }
+}
+#+end_src
+
+** Back-end Application
+- As Python does not enforce developers to compile its source code before running, the back-end application can be run directly through Django's 'run server' command
+
+* APIs & Source Code Structure
+** APIs
+| Related Data                              | Name       | Description                                                 |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| Care Setting                              | listcs     | list all care settings                                      |
+|                                           | addcs      | add new care setting                                        |
+|                                           | updatecs   | update care setting                                         |
+|                                           | removecs   | remove care setting                                         |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| System Function                           | listsf     | list all system functions                                   |
+|                                           | addsf      | add new system function                                     |
+|                                           | updatesf   | update system function                                      |
+|                                           | removesf   | remove system function                                      |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| Hazard Instance                           | listhi     | list all hazard instances                                   |
+|                                           | addhi      | add new hazard instance                                     |
+|                                           | updatehi   | update hazard instance                                      |
+|                                           | removehi   | remove hazard instance                                      |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| Issue Log                                 | listil     | list all issue logs                                         |
+|                                           | addil      | add new issue log                                           |
+|                                           | updateil   | update issue log                                            |
+|                                           | removeil   | remove issue log                                            |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| Process System                            | listps     | list all process systems                                    |
+|                                           | addps      | add new process system                                      |
+|                                           | updateps   | update process system                                       |
+|                                           | removeps   | remove process system                                       |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| Process Node                              | listpn     | list all process nodes                                      |
+|                                           | addpn      | add new process node                                        |
+|                                           | updatepn   | update process node                                         |
+|                                           | removepn   | remove process node                                         |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| Process Edge                              | listpe     | list all process edges                                      |
+|                                           | addpe      | add new process edge                                        |
+|                                           | updatepe   | update process edge                                         |
+|                                           | removepe   | remove process edge                                         |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| Risk Matrix                               | listrm     | list all risk matrixs                                       |
+|                                           | addrm      | add new risk matrix                                         |
+|                                           | updaterm   | update risk matrix                                          |
+|                                           | removerm   | remove risk matrix                                          |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| Report                                    | listre     | list all reports                                            |
+|                                           | addre      | add new report                                              |
+|                                           | updatere   | update report                                               |
+|                                           | removere   | remove report                                               |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| Hazard Type                               | listht     | list all hazard types                                       |
+|                                           | addht      | add new hazard type                                         |
+|                                           | updateht   | update hazard type                                          |
+|                                           | removeht   | remove hazard type                                          |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| System (System Function)                  | listsy     | list all systems                                            |
+|                                           | addsy      | add new system                                              |
+|                                           | updatesy   | update system                                               |
+|                                           | removesy   | remove system                                               |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| Process Node Group                        | listng     | list all node groups                                        |
+|                                           | addng      | add new node group                                          |
+|                                           | updateng   | update node group                                           |
+|                                           | removeng   | remove node group                                           |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| Process Node's associated System Function | listpnsf   | list all process node's system function association records |
+|                                           | addpnsf    | add new process node's system function association record   |
+|                                           | updatepnsf | update process node's system function association record    |
+|                                           | removepnsf | remove process node's system function association record    |
+|-------------------------------------------+------------+-------------------------------------------------------------|
+| Process Node's associated Hazard Instance | listpnhi   | list all process node's hazard instance association records |
+|                                           | addpnhi    | add new process node's hazard instance association record   |
+|                                           | updatepnhi | update process node's hazard instance association record    |
+|                                           | removepnhi | remove process node's hazard instance association record    |
+** Source Code Structure
+| Folder                  | Description                          |
+|-------------------------+--------------------------------------|
+| /frontend               | all the front-end related files      |
+| /frontend/src/pages     | front-end main source code files     |
+| /frontend/src/assets    | some front-end resource files        |
+| /frontend/dist          | front-end build files                |
+| /frontend/configuration | front-end configuration files        |
+| /backend                | all the back-end related files       |
+| /backend/venv           | back-end Python3 virtual environment |
+| /backend/src            | back-end source code files           |
+| /backend/src/smart_main | back-end main source code files      |
+
+* Database
+** Care Setting
+| Database Item | Related Concept          |
+|---------------+--------------------------|
+| cs_name       | Care Setting Name        |
+| cs_desc       | Care Setting Description |
+
+** System Function
+| Database Item | Related Concept             |
+|---------------+-----------------------------|
+| sf_name       | System Function Name        |
+| sf_desc       | System Function Description |
+| sf_parent     | Associated System           |
+
+** Hazard Instance
+| Database Item | Related Concept                     |
+|---------------+-------------------------------------|
+| hi_name       | Hazard Instance Name                |
+| hi_desc       | Hazard Instance Description         |
+| hi_inse       | Initial Severity                    |
+| hi_inli       | Initial Likelihood                  |
+| hi_rese       | Residual Severity                   |
+| hi_reli       | Residual Likelihood                 |
+| hi_inrr       | Initial Risk Rating                 |
+| hi_rerr       | Residual Risk Rating                |
+| hi_clju       | Clinical Justification              |
+| hi_parent     | Associated Hazard Type              |
+| hi_ps         | Associated Process Step (Abandoned) |
+| hi_sf         | Associated System Function          |
+
+** Care Process System
+| Database Item | Related Concept            |
+|---------------+----------------------------|
+| ps_name       | Process System Name        |
+| ps_desc       | Process System Description |
+
+** Process Node
+| Database Item | Related Concept                                    |
+|---------------+----------------------------------------------------|
+| label         | Node Label                                         |
+| pn_desc       | Node Description                                   |
+| x             | Coordinate x                                       |
+| y             | Coordinate y                                       |
+| color         | Node color (Used to draw different types of nodes) |
+| size          | Node size (Used to draw different tyeps of nodes)  |
+| shape         | Node shape (Used to draw different types fo nodes) |
+| pn_cs         | Associaed Care Setting                             |
+| pn_ps         | Associated Process System                          |
+| parent        | Associated Group                                   |
+
+** Process Edge
+| Database Item | Related Concept                        |
+|---------------+----------------------------------------|
+| label         | Edge Label                             |
+| source        | Start Point (Stores a process node id) |
+| target        | End Point (Stores a process node id)   |
+| pe_desc       | Edge Description                       |
+| pe_ps         | Associated Process System              |
+
+** Process Group
+| Database Item | Related Concept           |
+|---------------+---------------------------|
+| label         | Group Label               |
+| x             | Coordinate y              |
+| y             | Coordinate x              |
+| ng_ps         | Associated Process System |
+
+** Cause and Effect
+| Database Item | Related Concept                     |
+|---------------+-------------------------------------|
+| ca_name       | Cause Name                          |
+| ca_desc       | Cause Description                   |
+| ca_hi         | Associated Hazard Instance (Cause)  |
+| ef_name       | Effect Name                         |
+| ef_desc       | Effect Description                  |
+| ef_hi         | Associated Hazard Instance (Effect) |
+| caco_name     | Cause Control Name                  |
+| caco_desc     | Cause Control Description           |
+| caco_state    | Cause Control State                 |
+| caco_type     | Cause Control Type                  |
+| caco_ca       | Associated Cause (Cause Control)    |
+| efco_name     | Effect Control Name                 |
+| efco_desc     | Effect Control Description          |
+| efco_state    | Effect Control State                |
+| efco_type     | Effect Control Type                 |
+| efco_ef       | Associated Effect (Effect Control)  |
+
+** Issue Log
+| Database Item | Related Concept   |
+|---------------+-------------------|
+| il_name       | Issue Name        |
+| il_desc       | Issue Description |
+
+** Report
+| Database Item | Related Concept                         |
+|---------------+-----------------------------------------|
+| re_name       | Report Name                             |
+| re_desc       | Report Description                      |
+| re_crm        | Clinical Risk Management System         |
+| re_ss         | Summary Safety Statement                |
+| re_qa         | Quality Assurance and Document Approval |
+| re_cm         | Configuration Management                |
+
+* Resources
+- https://umijs.org (UmiJS documentation)
+- https://github.com/alibaba/GGEditor/blob/master/README.en-US.md (GGEditor documentation)
+- https://pro.ant.design/docs/getting-started (Ant Design Pro)
+- https://stackoverflow.com/questions/14484787/wrap-text-in-javascript
+  - wrap text into multiple lines
+  - used in the 'Care Process Editor'
+  - text in each node is wrapped through this method
